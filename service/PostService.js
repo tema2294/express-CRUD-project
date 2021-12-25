@@ -15,6 +15,7 @@ export const getOnePost = async (id) => {
 
 export const updatePost = async (post) => {
     const {id} = post
+    if (!id) throw new Error('не указан id')
     return Post.findByIdAndUpdate(id, post, {new: true})
 }
 export const deletePost = async (id) => {
