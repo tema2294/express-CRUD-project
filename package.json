@@ -1,6 +1,6 @@
 {
   "name": "express-project",
-  "version": "1",
+  "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "type": "module",
