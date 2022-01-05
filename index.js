@@ -17,7 +17,7 @@ const corsOptions ={
     optionSuccessStatus:200
 }
 app.use(cors());
-app.options('*', cors());
+app.options('*', cors(corsOptions));
 
 async function startApp() {
     try {
