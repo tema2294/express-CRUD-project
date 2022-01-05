@@ -10,7 +10,7 @@ import {secret} from "../config.js";
             const { username:oldUserName,newUsername:username,password,coins = [] } = req.body;
 
             let user;
-            const token = req.headers.authorization
+            const token = req.headers.authorization.split(' ')[1]
 
             const { id,roles } = jwt.verify(token, secret)
 
