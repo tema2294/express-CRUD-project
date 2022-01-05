@@ -50,11 +50,9 @@ export const login = async (req, res) => {
             if (!validPassword) {
                 return res.status(400).json({message: `Введен неверный пароль`})
             }
-            console.log(validPassword)
-
             const token = generateAccessToken(user._id, user.roles)
 
-            return res.json({token})
+            return res.json({token,user})
         } catch (e) {
             console.log(e)
             res.status(400).json({message: 'Login error'})
