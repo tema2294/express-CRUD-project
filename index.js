@@ -7,8 +7,10 @@ const port = process.env.PORT || 5000
 
 const app = express()
 const DB_URL = 'mongodb+srv://tema2294:943833fF@cluster0.hq7ki.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+app.use(cors());
 
 app.use(express.json())
+
 app.use('/auth',authRouter)
 
 // const corsOptions ={
@@ -16,8 +18,6 @@ app.use('/auth',authRouter)
 //     credentials:true,            //access-control-allow-credentials:true
 //     optionSuccessStatus:200
 // }
-// app.use(cors());
-// app.options('*', cors(corsOptions));
 
 async function startApp() {
     try {
