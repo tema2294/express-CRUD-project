@@ -11,7 +11,7 @@ const generateAccessToken = (id, roles) => {
         id,
         roles
     }
-    return jwt.sign(payload, secret, {expiresIn: "120"} )
+    return jwt.sign(payload, secret, {expiresIn: "1d"} )
 }
 
 
@@ -41,6 +41,7 @@ const generateAccessToken = (id, roles) => {
 export const login = async (req, res) => {
         try {
             const {username, password} = req.body
+            console.log(req.body)
             const user = await User.findOne({username})
             if (!user) {
                 return res.status(400).json({message: `Пользователь ${username} не найден`})
@@ -58,11 +59,3 @@ export const login = async (req, res) => {
         }
     }
 
-   export const getUsers =async (req, res)=> {
-        try {
-            const users = await User.find()
-            res.json(users)
-        } catch (e) {
-            console.log(e)
-        }
-}

@@ -1,7 +1,6 @@
 import Router from "express"
 import {check} from "express-validator"
-import {getUsers, login, registration} from "./controllers/authController.js"
-import {roleMiddleware} from "./middleware/roleMiddlewere.js";
+import { login, registration} from "./controllers/authController.js"
 
 
 const authRouter = new Router()
@@ -11,7 +10,6 @@ authRouter.post('/registration', [
     check('password', "Пароль должен быть больше 4 и меньше 10 символов").isLength({min:4, max:10})
 ], registration)
 authRouter.post('/login', login)
-authRouter.get('/users', roleMiddleware(["ADMIN"]), getUsers)
 
 // authRouter.get('/createAdmin', async ()=>{
 //     const userRole = await Role.findOne({value: "USER"})

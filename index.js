@@ -1,6 +1,8 @@
 import express from "express"
 import mongoose from "mongoose"
 import authRouter from "./authRouter.js"
+import userRouter from "./userRouter.js"
+
 import cors from "cors"
 
 const port = process.env.PORT || 5000
@@ -13,6 +15,7 @@ app.use(cors());
 app.use(express.json())
 
 app.use('/auth',authRouter)
+app.use('/user',userRouter)
 
 
 async function startApp() {
