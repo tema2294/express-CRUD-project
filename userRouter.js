@@ -9,7 +9,7 @@ const userRouter = new Router()
 
 
 userRouter.get('/all-users', roleMiddleware(["ADMIN"]), getUsers)
-userRouter.get('/userInfo', authMiddleware, getUserInfo)
+userRouter.get('/user-info', authMiddleware, getUserInfo)
 
 userRouter.post('/update',updateUser)
 
