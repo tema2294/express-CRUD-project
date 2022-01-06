@@ -1,6 +1,7 @@
 import Router from "express"
 import {roleMiddleware} from "./middleware/roleMiddlewere.js";
-import {getUsers, updateUser} from "./controllers/userController.js";
+import {getUserInfo, getUsers, updateUser} from "./controllers/userController.js";
+import {authMiddleware} from "./middleware/authMiddleware";
 
 
 
@@ -8,6 +9,7 @@ const userRouter = new Router()
 
 
 userRouter.get('/all-users', roleMiddleware(["ADMIN"]), getUsers)
+userRouter.get('/userInfo', authMiddleware, getUserInfo)
 
 userRouter.post('/update',updateUser)
 
