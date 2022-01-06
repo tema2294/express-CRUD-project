@@ -1,7 +1,7 @@
 import Router from "express"
 import {roleMiddleware} from "./middleware/roleMiddlewere.js";
 import {getUserInfo, getUsers, updateUser} from "./controllers/userController.js";
-import {authMiddleware} from "./middleware/authMiddleware";
+import {authMiddleware} from "./middleware/authMiddleware.js";
 
 
 
