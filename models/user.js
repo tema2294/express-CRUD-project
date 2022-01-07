@@ -6,7 +6,7 @@ const User = new mongoose.Schema({
     roles: [{type: String, ref: 'Role'}],
     coins: [{
         coinName: {type: String,unique: true},
-        count: {type: String,required: true},
+        count: {type: String},
     }]
 })
 

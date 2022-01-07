@@ -57,3 +57,20 @@ export const getUserInfo = async (req, res) => {
         res.status(400).json({message: 'user not found'})
     }
 }
+export const deleteCoin = async (req, res) => {
+    try {
+        console.log(req.params)
+        const { params } = req
+        const { coinName:  coinNameForDeleted } = params
+
+        const {id} = req.user
+
+        const {coins} = await User.findById(id)
+        const filteredCoins = coins.filter((coin)=> coin.coinName !== coinNameForDeleted)
+        const updatedUser = await User.findByIdAndUpdate(id,{coins:filteredCoins},{new: true})
+
+        return res.json(updatedUser.coins)
+    } catch (e) {
+        res.status(400).json({message: 'user not found'})
+    }
+}
