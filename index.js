@@ -16,7 +16,7 @@ app.use(express.json())
 
 app.use('/auth',authRouter)
 app.use('/user',userRouter)
-
+app.use('/socket',c)
 
 async function startApp() {
     try {

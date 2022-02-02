@@ -59,10 +59,11 @@ export const getUserInfo = async (req, res) => {
 }
 export const deleteCoin = async (req, res) => {
     try {
-        console.log(req.params)
         const { params } = req
         const { coinName:  coinNameForDeleted } = params
-
+        if (!coinNameForDeleted) {
+            res.status(400).json({message: 'Coin name is not specified'})
+        }
         const {id} = req.user
 
         const {coins} = await User.findById(id)
@@ -71,6 +72,6 @@ export const deleteCoin = async (req, res) => {
 
         return res.json(updatedUser.coins)
     } catch (e) {
-        res.status(400).json({message: 'user not found'})
+        res.status(400).json({message: 'Error deleting coin'})
     }
 }
