@@ -2,6 +2,7 @@ import express from "express"
 import mongoose from "mongoose"
 import authRouter from "./authRouter.js"
 import userRouter from "./userRouter.js"
+const ws = require('ws');
 
 import cors from "cors"
 
@@ -16,7 +17,11 @@ app.use(express.json())
 
 app.use('/auth',authRouter)
 app.use('/user',userRouter)
-app.use('/socket',c)
+
+export const wss = new ws.Server({
+    port: process.env.PORT,
+})
+
 
 async function startApp() {
     try {

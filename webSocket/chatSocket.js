@@ -1,8 +1,4 @@
-const ws = require('ws');
-
-const wss = new ws.Server({
-    port: process.env.PORT,
-})
+import {wss} from "../index";
 
 
 wss.on('connection', function connection(ws) {
