@@ -2,7 +2,6 @@ const ws = require('ws');
 
 const wss = new ws.Server({
     port: process.env.PORT,
-    path: '/chat'
 })
 
 
