@@ -2,8 +2,6 @@ import express from "express"
 import mongoose from "mongoose"
 import authRouter from "./authRouter.js"
 import userRouter from "./userRouter.js"
-const ws = require('ws');
-
 import cors from "cors"
 
 const port = process.env.PORT || 5000
