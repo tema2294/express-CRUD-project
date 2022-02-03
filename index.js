@@ -7,7 +7,7 @@ import cors from "cors"
 const port = process.env.PORT || 5000
 
 const app = express()
-const DB_URL = 'mongodb+srv://tema2294:943833fF@cluster0.hq7ki.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+const DB_URL = `mongodb+srv://${process.env.loginDb}:${ process.env.passwordDb}@cluster0.hq7ki.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 
 app.use(cors());
 
