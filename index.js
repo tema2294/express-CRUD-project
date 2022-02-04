@@ -16,8 +16,7 @@ app.use(express.json())
 
 app.use('/auth',authRouter)
 app.use('/user',userRouter)
-export const wss = new WebSocketServer({server: app}, () => console.log(`Server started on 5000`))
-
+export const wss = new WebSocketServer({server: app})
 
 wss.on('connection', webSocketController)
 
