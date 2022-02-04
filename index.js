@@ -16,7 +16,9 @@ app.use(express.json())
 
 app.use('/auth',authRouter)
 app.use('/user',userRouter)
-export const wss = new WebSocketServer({server: app})
+
+const wsProps = process.env.PORT ? {server: app} : {port: 5050}
+export const wss = new WebSocketServer(wsProps)
 
 wss.on('connection', webSocketController)
 
