@@ -3,7 +3,8 @@ import mongoose from "mongoose"
 import authRouter from "./authRouter.js"
 import userRouter from "./userRouter.js"
 import cors from "cors"
-import { WebSocketServer } from 'ws'
+// import { WebSocketServer } from 'ws'
+import { Server  } from 'ws'
 import {webSocketController} from "./controllers/webSocket.js";
 const port = process.env.PORT || 5000
 
@@ -18,7 +19,8 @@ app.use('/auth',authRouter)
 app.use('/user',userRouter)
 
 const wsProps = process.env.PORT ? {server: app} : {port: 5050}
-export const wss = new WebSocketServer(wsProps)
+// export const wss = new WebSocketServer(wsProps)
+export const wss = new Server(wsProps) 
 
 wss.on('connection', webSocketController)
 
