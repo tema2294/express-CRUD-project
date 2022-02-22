@@ -1,6 +1,6 @@
 import Router from "express"
 import {roleMiddleware} from "./middleware/roleMiddlewere.js";
-import {deleteCoin, getUserInfo, getUsers, updateUser} from "./controllers/userController.js";
+import {deleteCoin, getUserInfo, getUsers, updateCoin, updateUser} from "./controllers/userController.js";
 import {authMiddleware} from "./middleware/authMiddleware.js";
 
 
@@ -13,5 +13,6 @@ userRouter.get('/user-info', authMiddleware, getUserInfo)
 userRouter.delete('/:coinName', authMiddleware, deleteCoin)
 
 userRouter.post('/update',updateUser)
+userRouter.post('/updateCoin',updateCoin)
 
 export default userRouter

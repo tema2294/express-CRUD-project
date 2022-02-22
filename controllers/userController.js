@@ -75,3 +75,39 @@ export const deleteCoin = async (req, res) => {
         res.status(400).json({message: 'Error deleting coin'})
     }
 }
+
+export const updateCoin = async (req, res) => {
+    try {
+        const { count, coinId } = req.body;
+
+        const token = req.headers.authorization.split(' ')[1]
+
+        const { id } = jwt.verify(token, secret)
+        const user = await User.findById(id)
+
+        const isMyUser = id === user?._id.toString()
+
+
+        if (isMyUser || roles.includes("ADMIN")) {
+
+            const updatedCoins = user.coins.map((coin) =>{
+                const {id} = coin
+                const isCoinForUpdate = id === coinId
+                if (isCoinForUpdate) {
+                    return {...coin,count}
+                } else {
+                    return coin
+                }
+            })
+            const updatedUser = await User.findByIdAndUpdate(id, {
+                ...user,
+                coins: updatedCoins
+            }, {new: true})
+            return updatedUser
+        } else {
+            return res.json({message: "You are don't have permissions"})
+        }
+    } catch (e) {
+        res.status(400).json({message: 'update error'})
+    }
+}
