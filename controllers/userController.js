@@ -82,7 +82,7 @@ export const updateCoin = async (req, res) => {
 
         const token = req.headers.authorization.split(' ')[1]
 
-        const { id } = jwt.verify(token, secret)
+        const { id ,roles } = jwt.verify(token, secret)
         const user = await User.findById(id)
 
         const isMyUser = id === user?._id.toString()
