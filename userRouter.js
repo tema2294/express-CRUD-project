@@ -13,6 +13,6 @@ userRouter.get('/user-info', authMiddleware, getUserInfo)
 userRouter.delete('/:coinName', authMiddleware, deleteCoin)
 
 userRouter.post('/update',updateUser)
-userRouter.post('/updateCoin',updateCoin)
+userRouter.post('/update-coin',updateCoin)
 
 export default userRouter

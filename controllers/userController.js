@@ -59,16 +59,16 @@ export const getUserInfo = async (req, res) => {
 }
 export const deleteCoin = async (req, res) => {
     try {
-        const { params } = req
-        const { coinName:  coinNameForDeleted } = params
+        const {params} = req
+        const {coinName: coinNameForDeleted} = params
         if (!coinNameForDeleted) {
             res.status(400).json({message: 'Coin name is not specified'})
         }
         const {id} = req.user
 
         const {coins} = await User.findById(id)
-        const filteredCoins = coins.filter((coin)=> coin.coinName !== coinNameForDeleted)
-        const updatedUser = await User.findByIdAndUpdate(id,{coins:filteredCoins},{new: true})
+        const filteredCoins = coins.filter((coin) => coin.coinName !== coinNameForDeleted)
+        const updatedUser = await User.findByIdAndUpdate(id, {coins: filteredCoins}, {new: true})
 
         return res.json(updatedUser.coins)
     } catch (e) {
@@ -78,35 +78,20 @@ export const deleteCoin = async (req, res) => {
 
 export const updateCoin = async (req, res) => {
     try {
-        const { count, coinId } = req.body;
-
+        const {coinId, count} = req.body
         const token = req.headers.authorization.split(' ')[1]
+        const {id} = jwt.verify(token, secret)
+        const {coins} = await User.findById(id)
 
-        const { id ,roles } = jwt.verify(token, secret)
-        const user = await User.findById(id)
+        const updatedCoins = coins.map((coin) => {
+            if (coin.coinName === coinId) {
+                return {coinName: coinId, count}
+            } else return coin
+        })
 
-        const isMyUser = id === user?._id.toString()
+        const newUser = await User.findByIdAndUpdate(id, {coins: updatedCoins}, {new: true})
 
-
-        if (isMyUser || roles.includes("ADMIN")) {
-
-            const updatedCoins = user.coins.map((coin) =>{
-                const {id} = coin
-                const isCoinForUpdate = id === coinId
-                if (isCoinForUpdate) {
-                    return {...coin,count}
-                } else {
-                    return coin
-                }
-            })
-            const updatedUser = await User.findByIdAndUpdate(id, {
-                ...user,
-                coins: updatedCoins
-            }, {new: true})
-            return updatedUser
-        } else {
-            return res.json({message: "You are don't have permissions"})
-        }
+        return res.json({coinId, count})
     } catch (e) {
         res.status(400).json({message: 'update error'})
     }
