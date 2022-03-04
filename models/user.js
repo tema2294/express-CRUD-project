@@ -12,6 +12,7 @@ const User = new mongoose.Schema({
         {
             investmentName: {type: String,unique: true},
             count: {type: Number},
+            isUsd: Boolean
         }
     ]
 })
