@@ -7,7 +7,13 @@ const User = new mongoose.Schema({
     coins: [{
         coinName: {type: String,unique: true},
         count: {type: String},
-    }]
+    }],
+    otherInvestments: [
+        {
+            investmentName: {type: String,unique: true},
+            count: {type: Number},
+        }
+    ]
 })
 
 export default mongoose.model("User",User)
