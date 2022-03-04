@@ -6,7 +6,7 @@ import {secret} from "../config.js";
 
 export const updateUser = async (req, res) => {
     try {
-        const {username: oldUserName, newUsername: username, password, coins = [],otherInvestments = []} = req.body;
+        const {username: oldUserName, newUsername: username, password, coins = [],otherInvestments } = req.body;
 
         let user;
         const token = req.headers.authorization.split(' ')[1]
@@ -27,7 +27,7 @@ export const updateUser = async (req, res) => {
                 username,
                 password,
                 coins: [...user.coins, ...coins],
-                otherInvestments: [...user.otherInvestments, ...otherInvestments]
+                otherInvestments: [...user.otherInvestments, otherInvestments]
             }, {new: true})
             return res.json({message: 'success, user was updated', [isMyUser ? 'user' : 'otherUser']: updateUser})
         }
