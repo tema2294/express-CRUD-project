@@ -76,6 +76,22 @@ export const deleteCoin = async (req, res) => {
     }
 }
 
+export const deleteOtherInvestment = async (req, res) => {
+    try {
+        const { params } = req
+        const { id } = params
+
+        const {id: userId} = req.user
+
+        const { otherInvestments } = await User.findById(userId)
+        const updatedOtherInvestments = otherInvestments.filter((coin) => coin._id !== id)
+        const updatedUser = await User.findByIdAndUpdate(userId, {otherInvestments: updatedOtherInvestments}, {new: true})
+
+        return res.json(updatedUser.otherInvestments)
+    } catch (e) {
+        res.status(400).json({message: 'Error deleting coin'})
+    }
+}
 export const updateCoin = async (req, res) => {
     try {
         const {coinId, count} = req.body
