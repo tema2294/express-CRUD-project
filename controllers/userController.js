@@ -2,6 +2,7 @@ import User from "../models/user.js"
 
 import jwt from "jsonwebtoken"
 import {secret} from "../config.js";
+import mongoose from "mongoose";
 
 
 export const updateUser = async (req, res) => {
@@ -82,9 +83,10 @@ export const deleteOtherInvestment = async (req, res) => {
         const { id } = params
 
         const {id: userId} = req.user
-
         const { otherInvestments } = await User.findById(userId)
-        const updatedOtherInvestments = otherInvestments.filter((coin) => coin._id !== id)
+
+        const updatedOtherInvestments = otherInvestments.filter((coin) => coin._id.toString() !== id)
+
         const updatedUser = await User.findByIdAndUpdate(userId, {otherInvestments: updatedOtherInvestments}, {new: true})
 
         return res.json(updatedUser.otherInvestments)
