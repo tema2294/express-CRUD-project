@@ -2,12 +2,11 @@ import User from "../models/user.js"
 
 import jwt from "jsonwebtoken"
 import {secret} from "../config.js";
-import mongoose from "mongoose";
 
 
 export const updateUser = async (req, res) => {
     try {
-        const {username: oldUserName, newUsername: username, password, coins = [],otherInvestments } = req.body;
+        const {username: oldUserName, newUsername: username, password, coins = [],otherInvestments:otherInvestmentsFromRequest } = req.body;
 
         let user;
         const token = req.headers.authorization.split(' ')[1]
@@ -24,6 +23,11 @@ export const updateUser = async (req, res) => {
 
 
         if (isMyUser || roles.includes("ADMIN")) {
+
+            const { investmentName,count,isUsd } = otherInvestmentsFromRequest
+            const isFullOtherInvestments = investmentName.length > 0 && count > 0 && isUsd
+            const otherInvestments = isFullOtherInvestments ? {investmentName , count , isUsd} : undefined
+
             const updateUser = await User.findByIdAndUpdate(id, {
                 username,
                 password,
