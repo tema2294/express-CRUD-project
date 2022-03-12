@@ -27,7 +27,7 @@ wss.on('connection', webSocketController)
 async function startApp() {
     try {
         await mongoose.connect(DB_URL, {useUnifiedTopology: true, useNewUrlParser: true})
-        app.listen(port, () => console.log('SERVER STARTED ON PORT ' + port + 'haha'))
+        app.listen(port, () => console.log('SERVER STARTED ON PORT ' + port))
 
     } catch (e) {
         console.log(e)

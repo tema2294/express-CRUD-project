@@ -7,12 +7,11 @@ import {secret} from "../config.js";
 export const updateUser = async (req, res) => {
     try {
         const {username: oldUserName, newUsername: username, password, coins = [],otherInvestments:otherInvestmentsFromRequest } = req.body;
-
         let user;
         const token = req.headers.authorization.split(' ')[1]
 
         const {id, roles} = jwt.verify(token, secret)
-
+        console.log(token)
         if (!oldUserName) {
             user = await User.findById(id)
         } else {
@@ -21,23 +20,28 @@ export const updateUser = async (req, res) => {
 
         const isMyUser = id === user?._id.toString()
 
+         const newOtherInvestments = [...user.otherInvestments]
+
+            if (otherInvestmentsFromRequest) {
+                const { investmentName,count,isUsd } = otherInvestmentsFromRequest
+                const isFullOtherInvestments = investmentName.length > 0 && count > 0 && isUsd
+                const otherInvestments = isFullOtherInvestments ? {investmentName , count , isUsd} : undefined
+                newOtherInvestments.push(otherInvestments)
+            }
 
         if (isMyUser || roles.includes("ADMIN")) {
-
-            const { investmentName,count,isUsd } = otherInvestmentsFromRequest
-            const isFullOtherInvestments = investmentName.length > 0 && count > 0 && isUsd
-            const otherInvestments = isFullOtherInvestments ? {investmentName , count , isUsd} : undefined
 
             const updateUser = await User.findByIdAndUpdate(id, {
                 username,
                 password,
                 coins: [...user.coins, ...coins],
-                otherInvestments: [...user.otherInvestments, otherInvestments]
+                otherInvestments: newOtherInvestments
             }, {new: true})
             return res.json({message: 'success, user was updated', [isMyUser ? 'user' : 'otherUser']: updateUser})
         }
         return res.json({message: "You are don't have permissions"})
     } catch (e) {
+        console.log(e)
         res.status(400).json({message: 'update error'})
     }
 }
