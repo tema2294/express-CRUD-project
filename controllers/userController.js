@@ -25,7 +25,7 @@ export const updateUser = async (req, res) => {
             if (otherInvestmentsFromRequest) {
                 const { investmentName,count,isUsd } = otherInvestmentsFromRequest
                 const isFullOtherInvestments = investmentName.length > 0 && count > 0 && isUsd
-                const otherInvestments = isFullOtherInvestments ? {investmentName , count , isUsd: isUsd ?? false} : undefined
+                const otherInvestments = isFullOtherInvestments ? { investmentName , count , isUsd: isUsd ?? false } : undefined
                 newOtherInvestments.push(otherInvestments)
             }
 
