@@ -26,7 +26,9 @@ export const updateUser = async (req, res) => {
                 const { investmentName,count,isUsd } = otherInvestmentsFromRequest
                 const isFullOtherInvestments = investmentName.length > 0 && count > 0
                 const otherInvestments = isFullOtherInvestments ? { investmentName , count , isUsd: isUsd ?? false } : undefined
-                newOtherInvestments.push(otherInvestments)
+                if (otherInvestments) {
+                    newOtherInvestments.push(otherInvestments)
+                }
             }
 
         if (isMyUser || roles.includes("ADMIN")) {
